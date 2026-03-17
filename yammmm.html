@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="th" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YuThamSin | ยูทำศิลป์ — นิทรรศการศิลปะร่วมสมัย 2026</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 50: '#eef2f7', 100: '#d4dce8', 200: '#a9b9d1', 300: '#7e96ba', 400: '#5373a3', 500: '#2d5087', 600: '#1a3a6b', 700: '#0f2850', 800: '#091b3a', 900: '#050e1f' },
+            cream: '#fafbfd'
+          },
+          fontFamily: {
+            thai: ['"Noto Sans Thai"', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-bg {
+      background: linear-gradient(135deg, #0f2850 0%, #1a3a6b 40%, #2d5087 70%, #5373a3 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255, 255, 255, 0.02) 50px),
+        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255, 255, 255, 0.02) 50px);
+    }
+
+    .gallery-card img {
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-card .overlay {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-card:hover .overlay {
+      opacity: 1;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #1a3a6b;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .artist-card {
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .artist-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(15, 40, 80, 0.15);
+    }
+
+    .btn-primary {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(15, 40, 80, 0.3);
+    }
+
+    .ticket-type {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .ticket-type:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(15, 40, 80, 0.12);
+    }
+
+    .ticket-type.selected {
+      border-color: #1a3a6b;
+      background: #eef2f7;
+    }
+
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.05;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-30px) rotate(180deg);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-backdrop {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .modal-content {
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    .mobile-menu {
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes heroPulse {
+
+      0%,
+      100% {
+        opacity: 0.6
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    .hero-accent {
+      animation: heroPulse 3s ease-in-out infinite;
+    }
+
+    .stagger-1 {
+      transition-delay: 0.1s;
+    }
+
+    .stagger-2 {
+      transition-delay: 0.2s;
+    }
+
+    .stagger-3 {
+      transition-delay: 0.3s;
+    }
+
+    .stagger-4 {
+      transition-delay: 0.4s;
+    }
+
+    .stagger-5 {
+      transition-delay: 0.5s;
+    }
+
+    .stagger-6 {
+      transition-delay: 0.6s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1a3a6b;
+      box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.15);
+    }
+
+    .toast {
+      animation: toastIn 0.4s ease, toastOut 0.4s ease 3.6s forwards;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes toastOut {
+      from {
+        opacity: 1;
+        transform: translateY(0)
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(-20px)
+      }
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+
+<body class="h-full bg-white text-navy-800 font-thai">
+  <div id="app" class="w-full h-full overflow-auto"><!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2"></div>
+    <!-- ========== NAVBAR ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500" style="background:transparent;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 sm:h-20"><!-- Logo --> <a href="#home"
+            class="flex items-center gap-2 group">
+            <div
+              class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-navy-700 flex items-center justify-center group-hover:bg-navy-600 transition-colors">
+              <span class="text-white font-bold text-sm sm:text-base font-display">YTS</span>
+            </div><span id="nav-brand"
+              class="text-white font-semibold text-base sm:text-lg transition-colors">ยูทำศิลป์</span>
+          </a> <!-- Desktop Nav -->
+          <div class="hidden md:flex items-center gap-6 lg:gap-8"><a href="#home"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-home">หน้าแรก</a> <a href="#about"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-about">เกี่ยวกับ</a> <a href="#artists"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-artists">ศิลปิน</a> <a href="#gallery"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-gallery">ผลงาน</a> <a href="#visit"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-visit">เข้าชม</a> <a href="#ticket"
+              class="nav-link text-sm font-medium text-white/90 hover:text-white transition-colors"
+              id="nav-ticket">จองบัตร</a>
+          </div><!-- Auth / User -->
+          <!-- Mobile Menu Button --> <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2"> <i
+              data-lucide="menu" class="w-6 h-6" id="menu-icon"></i> </button>
+        </div>
+      </div><!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-navy-800/95 backdrop-blur-md mobile-menu">
+        <div class="px-4 py-4 space-y-2"><a href="#home" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">หน้าแรก</a>
+          <a href="#about" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">เกี่ยวกับ</a>
+          <a href="#artists" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">ศิลปิน</a>
+          <a href="#gallery" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">ผลงาน</a>
+          <a href="#visit" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">เข้าชม</a>
+          <a href="#ticket" onclick="closeMobileMenu()"
+            class="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors">จองบัตร</a>
+        </div>
+      </div>
+    </nav><!-- ========== HERO SECTION ========== -->
+    <section id="home" class="hero-bg relative" style="min-height:100%;">
+      <div class="floating-shape w-64 h-64 bg-white" style="top:10%;left:-5%;"></div>
+      <div class="floating-shape w-96 h-96 bg-white" style="bottom:5%;right:-10%;animation-delay:-7s;"></div>
+      <div class="floating-shape w-48 h-48 bg-white" style="top:50%;left:60%;animation-delay:-12s;"></div>
+      <div class="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-6"
+        style="min-height:100%;padding-top:100px;padding-bottom:80px;"><!-- Hero Poster Placeholder -->
+        <div class="fade-up mb-8 sm:mb-10">
+          <div
+            class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-96 md:h-[28rem] mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+            <!-- PLACEHOLDER: แทนที่ src ด้วยรูปโปสเตอร์งาน --> <img
+              src="หน้าหนัก รูปเเรก_0.png"
+              alt="โปสเตอร์นิทรรศการ ยูทำศิลป์ 2026" class="w-full h-full object-cover" loading="lazy"
+              onerror="this.style.background='linear-gradient(135deg,#0f2850,#2d5087)';this.alt='โปสเตอร์ไม่สามารถโหลดได้';">
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-900/40 to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4 text-left"><span
+                class="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white font-medium hero-accent">พ.ค.
+                2026</span>
+            </div>
+          </div>
+        </div><!-- Hero Text -->
+        <div class="fade-up stagger-2">
+          <p class="text-white/60 text-sm sm:text-base tracking-[0.3em] uppercase mb-3 font-light">Contemporary Art
+            Exhibition</p>
+          <h1 id="hero-title"
+            class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 leading-tight font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">นิทรรศการศิลปะ<br><span
+              class="text-navy-200">ยูทำศิลป์</span></h1>
+          <p id="hero-subtitle" class="text-lg sm:text-xl md:text-2xl text-white/70 font-light mb-2">YuThamSin
+            Exhibition 2026</p>
+          <p class="text-white/40 text-sm sm:text-base mb-8 sm:mb-10">1 - 30 พฤษภาคม 2026 &nbsp;|&nbsp; หอศิลป์ร่วมสมัย
+            YTS</p>
+        </div>
+        <div class="fade-up stagger-3 flex flex-col sm:flex-row gap-3 sm:gap-4"><a href="#ticket"
+            class="btn-primary inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-navy-700 font-semibold rounded-xl text-base shadow-lg">
+            <i data-lucide="ticket" class="w-5 h-5"></i> จองบัตรเข้าชม </a> <a href="#about"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/30 text-white font-medium rounded-xl hover:bg-white/10 transition-all text-base">
+            <i data-lucide="info" class="w-5 h-5"></i> รายละเอียด </a>
+        </div><!-- Scroll Indicator -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce"><i data-lucide="chevron-down"
+            class="w-6 h-6 text-white/40"></i>
+        </div>
+      </div>
+    </section><!-- ========== ABOUT SECTION ========== -->
+    <section id="about" class="py-20 sm:py-28 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-up"><span
+            class="inline-block px-4 py-1.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full tracking-wider uppercase mb-4">About
+            the Exhibition</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-800 font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">เกี่ยวกับนิทรรศการ</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div class="fade-left">
+            <div class="relative rounded-2xl overflow-hidden shadow-xl"><!-- PLACEHOLDER: รูปบรรยากาศงาน --> <img
+                src="รูปที่2_0.png" alt="บรรยากาศนิทรรศการ"
+                class="w-full h-auto" loading="lazy"
+                onerror="this.style.background='#eef2f7';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div class="absolute -bottom-3 -right-3 w-24 h-24 bg-navy-100 rounded-xl -z-10"></div>
+            </div>
+          </div>
+          <div class="fade-right">
+            <h3 class="text-2xl sm:text-3xl font-bold text-navy-800 mb-6 leading-snug">"ศิลปะ คือ การลงมือทำ<br>
+              และ การตีความที่ไม่มีวันสิ้นสุด"</h3>
+            <p class="text-navy-600 leading-relaxed mb-5 text-base sm:text-lg"><strong>ยูทำศิลป์ (YuThamSin)</strong>
+              คือนิทรรศการศิลปะร่วมสมัยที่เปิดพื้นที่ให้ทุกคนได้สัมผัสกับความงามของการสร้างสรรค์ผลงาน ผ่านผลงานจิตรกรรม
+              ประติมากรรม และสื่อผสม จากศิลปินรุ่นใหม่ที่มีแนวคิดโดดเด่น</p>
+            <p class="text-navy-500 leading-relaxed mb-8 text-sm sm:text-base">แนวคิดหลักของงานคือ "ลงมือทำ
+              เพื่อค้นพบตัวตน" — เราเชื่อว่าศิลปะไม่ได้อยู่แค่ในกรอบรูป แต่อยู่ในทุกกระบวนการของชีวิต
+              ทุกผลงานในนิทรรศการนี้สะท้อนการเดินทางภายในของศิลปินแต่ละคน
+              พร้อมเปิดให้ผู้ชมร่วมตีความและสร้างความหมายของตนเอง</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 bg-navy-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2"><i data-lucide="palette" class="w-5 h-5 text-navy-600"></i>
+                  <span class="font-semibold text-navy-700 text-sm">ผลงาน 30+ ชิ้น</span>
+                </div>
+                <p class="text-navy-500 text-xs">จิตรกรรม ประติมากรรม สื่อผสม</p>
+              </div>
+              <div class="p-4 bg-navy-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2"><i data-lucide="users" class="w-5 h-5 text-navy-600"></i>
+                  <span class="font-semibold text-navy-700 text-sm">ศิลปิน 12 ท่าน</span>
+                </div>
+                <p class="text-navy-500 text-xs">ศิลปินรุ่นใหม่ไฟแรง</p>
+              </div>
+              <div class="p-4 bg-navy-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2"><i data-lucide="calendar" class="w-5 h-5 text-navy-600"></i>
+                  <span class="font-semibold text-navy-700 text-sm">30 วัน</span>
+                </div>
+                <p class="text-navy-500 text-xs">ตลอดเดือนพฤษภาคม 2026</p>
+              </div>
+              <div class="p-4 bg-navy-50 rounded-xl">
+                <div class="flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5 text-navy-600"></i>
+                  <span class="font-semibold text-navy-700 text-sm">Workshop</span>
+                </div>
+                <p class="text-navy-500 text-xs">เวิร์กช็อปศิลปะทุกสัปดาห์</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ========== ARTISTS SECTION ========== -->
+    <section id="artists" class="py-20 sm:py-28 bg-cream">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-up"><span
+            class="inline-block px-4 py-1.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full tracking-wider uppercase mb-4">Featured
+            Artists</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-800 font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">ศิลปินที่เข้าร่วม</h2>
+          <p class="text-navy-500 mt-4 max-w-xl mx-auto text-sm sm:text-base">พบกับศิลปินรุ่นใหม่ผู้มากความสามารถ
+            ที่พร้อมนำเสนอผลงานสร้างสรรค์อันทรงพลัง</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"><!-- Artist 1 -->
+          <div
+            class="artist-card bg-white rounded-2xl overflow-hidden shadow-sm border border-navy-100/50 fade-up stagger-1">
+            <div class="aspect-square overflow-hidden bg-navy-50"><!-- PLACEHOLDER: รูปศิลปิน 1 --> <img
+                src="Gemini_Generated_Image_fytp6cfytp6cfytp.png" alt="ศิลปิน พิมพ์ลดา"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#d4dce8';this.alt='ภาพไม่สามารถโหลดได้';">
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-navy-800 text-lg mb-1">ภัทรวดี สุขสมใจ</h3>
+              <p class="text-navy-400 text-xs font-medium tracking-wider uppercase mb-3">Mixed Media</p>
+              <p class="text-navy-500 text-sm leading-relaxed">ศิลปินสื่อผสมที่หยิบจับวัสดุเหลือใช้ในชีวิตประจำวันมาเปลี่ยนให้เป็นงานศิลปะที่สะท้อนถึงปัญหาสิ่งแวดล้อม</p>
+            </div>
+          </div><!-- Artist 2 -->
+          <div
+            class="artist-card bg-white rounded-2xl overflow-hidden shadow-sm border border-navy-100/50 fade-up stagger-2">
+            <div class="aspect-square overflow-hidden bg-navy-50"><!-- PLACEHOLDER: รูปศิลปิน 2 --> <img
+                src="Gemini_Generated_Image_lkecablkecablkec.png" alt="ศิลปิน ธนวิชญ์"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#d4dce8';this.alt='ภาพไม่สามารถโหลดได้';">
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-navy-800 text-lg mb-1">ธนกร ปัญญาวุฒิ</h3>
+              <p class="text-navy-400 text-xs font-medium tracking-wider uppercase mb-3">Sculpture</p>
+              <p class="text-navy-500 text-sm leading-relaxed">ประติมากรที่ใช้โลหะและไม้มาสร้างรูปทรงนามธรรมที่เล่าเรื่องราวเกี่ยวกับ "การเปลี่ยนแปลง" และ "กาลเวลา"</p>
+            </div>
+          </div><!-- Artist 3 -->
+          <div
+            class="artist-card bg-white rounded-2xl overflow-hidden shadow-sm border border-navy-100/50 fade-up stagger-3">
+            <div class="aspect-square overflow-hidden bg-navy-50"><!-- PLACEHOLDER: รูปศิลปิน 3 --> <img
+                src="Gemini_Generated_Image_kv108qkv108qkv10.png" alt="ศิลปิน สิรินดา"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#d4dce8';this.alt='ภาพไม่สามารถโหลดได้';">
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-navy-800 text-lg mb-1">ศิรินทร์ เจริญวงศ์</h3>
+              <p class="text-navy-400 text-xs font-medium tracking-wider uppercase mb-3">Oil Painting</p>
+              <p class="text-navy-500 text-sm leading-relaxed">จิตรกรสีน้ำมันผู้ถ่ายทอดอารมณ์ของ "ความเงียบ" ออกมาเป็นภาพทิวทัศน์เหนือจริงที่เต็มไปด้วยความลึกลับ</p>
+            </div>
+          </div><!-- Artist 4 -->
+          <div
+            class="artist-card bg-white rounded-2xl overflow-hidden shadow-sm border border-navy-100/50 fade-up stagger-4">
+            <div class="aspect-square overflow-hidden bg-navy-50"><!-- PLACEHOLDER: รูปศิลปิน 4 --> <img
+                src="Gemini_Generated_Image_5s2ben5s2ben5s2b.png" alt="ศิลปิน กันตพงศ์"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#d4dce8';this.alt='ภาพไม่สามารถโหลดได้';">
+            </div>
+            <div class="p-5">
+              <h3 class="font-bold text-navy-800 text-lg mb-1">ณัฐพล วิชัยดิษฐ์</h3>
+              <p class="text-navy-400 text-xs font-medium tracking-wider uppercase mb-3">Digital Art</p>
+              <p class="text-navy-500 text-sm leading-relaxed">ศิลปินที่ใช้การสร้างสรรค์ผลงาน เเบบดิจิทัลที่สะท้อนสังคมเรื่องสิ่งเเวดล้อม</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ========== GALLERY SECTION ========== -->
+    <section id="gallery" class="py-20 sm:py-28 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-up"><span
+            class="inline-block px-4 py-1.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full tracking-wider uppercase mb-4">Artworks</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-800 font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">ผลงานในนิทรรศการ</h2>
+          <p class="text-navy-500 mt-4 max-w-xl mx-auto text-sm sm:text-base">ตัวอย่างผลงานศิลปะที่จะจัดแสดงในนิทรรศการ
+            ยูทำศิลป์ 2026</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Gallery Item 1 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-2">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><!-- PLACEHOLDER: ผลงานศิลปะ 1 --> <img
+                src="วงจนอันไม่มีที่สิ้นสุด_0.png" alt="ผลงาน วงจนอันไม่มีที่สิ้นสุด"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#a9b9d1';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">วงจนอันไม่มีที่สิ้นสุด</p>
+                  <p class="text-white/70 text-sm">โดย ภัทรวดี สุขสมใจ</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">วงจนอันไม่มีที่สิ้นสุด</h4>
+              <p class="text-navy-400 text-xs mt-1">ภัทรวดี สุขสมใจ 2025</p>
+            </div>
+          </div><!-- Gallery Item 2 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-2">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><img
+                src="Gemini_Generated_Image_the0skthe0skthe0.png" alt="ผลงาน ความเงียบที่ดังก้อง"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#7e96ba';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">เสียงเรียกจากโลก</p>
+                  <p class="text-white/70 text-sm">โดย ณัฐพล วิชัยดิษฐ์</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">เสียงเรียกจากโลก</h4>
+              <p class="text-navy-400 text-xs mt-1">ณัฐพล วิชัยดิษฐ์ 2025</p>
+            </div>
+          </div><!-- Gallery Item 3 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-3">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><img
+                src="Screenshot 2026-03-17 223227.png" alt="ผลงาน เส้นขอบฟ้าที่หายไป"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#5373a3';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">ความเงียบของการหลงทาง</p>
+                  <p class="text-white/70 text-sm">โดย ศิรินทร์ เจริญวงศ์</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">ความเงียบของการหลงทาง</h4>
+              <p class="text-navy-400 text-xs mt-1">ศิรินทร์ เจริญวงศ์ 2026</p>
+            </div>
+          </div><!-- Gallery Item 4 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-4">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><img
+                src="Screenshot 2026-03-17 223256.png" alt="ผลงาน ความฝันสีน้ำ"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#2d5087';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">ความเงียบที่ล่องลอย</p>
+                  <p class="text-white/70 text-sm">โดย ศิรินทร์ เจริญวงศ์</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">ความเงียบที่ล่องลอย</h4>
+              <p class="text-navy-400 text-xs mt-1">ศิรินทร์ เจริญวงศ์ 2025</p>
+            </div>
+          </div><!-- Gallery Item 5 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-5">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><img
+                src="Screenshot 2026-03-17 223310.png" alt="ผลงาน ร่องรอยแห่งกาลเวลา"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#1a3a6b';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">ความเงียบแห่งการตื่นรู้</p>
+                  <p class="text-white/70 text-sm">โดย ศิรินทร์ เจริญวงศ์</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">ความเงียบแห่งการตื่นรู้</h4>
+              <p class="text-navy-400 text-xs mt-1">ศิรินทร์ เจริญวงศ์ 2026</p>
+            </div>
+          </div><!-- Gallery Item 6 -->
+          <div
+            class="gallery-card rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 group fade-up scale-in stagger-6">
+            <div class="aspect-[4/5] overflow-hidden bg-navy-50 relative"><img
+                src="Gemini_Generated_Image_ge2rkbge2rkbge2r.png" alt="ผลงาน แสงที่ปลายอุโมงค์"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.background='#0f2850';this.alt='ภาพไม่สามารถโหลดได้';">
+              <div
+                class="overlay absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent flex items-end p-5">
+                <div>
+                  <p class="text-white font-bold text-base">กาลเวลาที่หยั่งราก</p>
+                  <p class="text-white/70 text-sm">โดย ธนวิชญ์ จารุวรรณ</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="font-semibold text-navy-800 text-sm">กาลเวลาที่หยั่งราก</h4>
+              <p class="text-navy-400 text-xs mt-1">ธนวิชญ์ จารุวรรณ 2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ========== VISIT / EVENT INFO SECTION ========== -->
+    <section id="visit" class="py-20 sm:py-28 bg-cream">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-up"><span
+            class="inline-block px-4 py-1.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full tracking-wider uppercase mb-4">Plan
+            Your Visit</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-800 font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">ข้อมูลการเข้าชม</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12"><!-- Info Cards -->
+          <div class="space-y-5 fade-left">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-navy-100/30">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0"><i
+                    data-lucide="calendar-days" class="w-6 h-6 text-navy-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-navy-800 text-base mb-1">วันที่จัดงาน</h4>
+                  <p id="visit-date" class="text-navy-600 text-sm">1 - 30 พฤษภาคม 2026</p>
+                  <p class="text-navy-400 text-xs mt-1">เปิดให้เข้าชมทุกวัน (ไม่มีวันหยุด)</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-navy-100/30">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0"><i
+                    data-lucide="clock" class="w-6 h-6 text-navy-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-navy-800 text-base mb-1">เวลาเปิด-ปิด</h4>
+                  <p id="visit-time" class="text-navy-600 text-sm">10:00 - 20:00 น.</p>
+                  <p class="text-navy-400 text-xs mt-1">ปิดรับผู้เข้าชมรอบสุดท้าย 19:30 น.</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-navy-100/30">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0"><i
+                    data-lucide="map-pin" class="w-6 h-6 text-navy-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-navy-800 text-base mb-1">สถานที่จัดงาน</h4>
+                  <p id="visit-venue" class="text-navy-600 text-sm font-medium">หอศิลป์ร่วมสมัย YTS</p>
+                  <p class="text-navy-400 text-xs mt-1">99/9 ถนนราชดำเนินกลาง แขวงบวรนิเวศ เขตพระนคร กรุงเทพฯ 10200</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-navy-100/30">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-navy-50 flex items-center justify-center flex-shrink-0"><i
+                    data-lucide="train" class="w-6 h-6 text-navy-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-navy-800 text-base mb-1">การเดินทาง</h4>
+                  <p class="text-navy-500 text-sm">BTS สถานีสนามกีฬาแห่งชาติ ทางออก 1 เดินต่ออีก 500 เมตร หรือ MRT
+                    สถานีสามยอด ทางออก 2</p>
+                </div>
+              </div>
+            </div>
+          </div><!-- Map -->
+          <div class="fade-right">
+            <div
+              class="bg-white rounded-2xl overflow-hidden shadow-sm border border-navy-100/30 h-full min-h-[350px] sm:min-h-[450px]">
+              <!-- Google Maps Embed - พิกัดจำลองบริเวณเกาะรัตนโกสินทร์ --> <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.545!2d100.498!3d13.756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ1JzIxLjYiTiAxMDDCsDI5JzUyLjgiRQ!5e0!3m2!1sth!2sth!4v1"
+                width="100%" height="100%" style="border:0;min-height:350px;" allowfullscreen loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" title="แผนที่หอศิลป์ร่วมสมัย YTS"> </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ========== TICKET / REGISTRATION SECTION ========== -->
+    <section id="ticket" class="py-20 sm:py-28 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 fade-up"><span
+            class="inline-block px-4 py-1.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full tracking-wider uppercase mb-4">Tickets
+            &amp; Registration</span>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-navy-800 mb-4 font-display"
+            style="font-family:'Playfair Display','Noto Sans Thai',serif;">จองบัตรเข้าชม</h2>
+          <div class="max-w-2xl mx-auto bg-navy-50 rounded-xl p-5 border border-navy-100/50">
+            <div class="flex items-start gap-3"><i data-lucide="info"
+                class="w-5 h-5 text-navy-500 mt-0.5 flex-shrink-0"></i>
+              <p class="text-navy-600 text-sm text-left leading-relaxed">โดยทั่วไปสามารถ <strong>Walk-in
+                  เข้ามาชมงานได้เลย</strong> ไม่จำเป็นต้องจองล่วงหน้า แต่หากมาเป็น<strong>กลุ่ม 10 คนขึ้นไป</strong>
+                ทางเราแนะนำให้มีการจองบัตรก่อน เพื่อความสะดวกในการจัดเตรียมสถานที่</p>
+            </div>
+          </div>
+        </div><!-- Ticket Booking Form -->
+        <div class="bg-white rounded-2xl border border-navy-100/50 shadow-sm p-6 sm:p-8 fade-up"
+          id="booking-form-container">
+          <h3 class="text-xl font-bold text-navy-800 mb-6 flex items-center gap-2"><i data-lucide="clipboard-list"
+              class="w-5 h-5 text-navy-600"></i> แบบฟอร์มจองบัตรเข้าชม</h3><!-- Ticket Type Selection -->
+          <div class="mb-6"><label class="block text-sm font-semibold text-navy-700 mb-3">ประเภทบัตร</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="ticket-types">
+              <div class="ticket-type border-2 border-navy-100 rounded-xl p-4 text-center" data-type="student"
+                onclick="selectTicketType(this, 'student')"><i data-lucide="graduation-cap"
+                  class="w-8 h-8 text-navy-400 mx-auto mb-2"></i>
+                <p class="font-bold text-navy-800 text-sm">นักเรียน / นักศึกษา</p>
+                <p class="text-navy-400 text-xs mt-1">ฟรี (แสดงบัตรนักศึกษา)</p>
+              </div>
+              <div class="ticket-type border-2 border-navy-100 rounded-xl p-4 text-center" data-type="general"
+                onclick="selectTicketType(this, 'general')"><i data-lucide="user-check"
+                  class="w-8 h-8 text-navy-400 mx-auto mb-2"></i>
+                <p class="font-bold text-navy-800 text-sm">บุคคลทั่วไป</p>
+                <p class="text-navy-400 text-xs mt-1">50 บาท / ท่าน</p>
+              </div>
+            </div>
+            <p id="ticket-type-error" class="text-red-500 text-xs mt-2 hidden">กรุณาเลือกประเภทบัตร</p>
+          </div>
+          <form id="booking-form" onsubmit="handleBooking(event)">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div><label for="book-firstname" class="block text-sm font-medium text-navy-700 mb-1.5">ชื่อ <span
+                    class="text-red-400">*</span></label> <input type="text" id="book-firstname" required
+                  placeholder="ชื่อจริง"
+                  class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+              </div>
+              <div><label for="book-lastname" class="block text-sm font-medium text-navy-700 mb-1.5">นามสกุล <span
+                    class="text-red-400">*</span></label> <input type="text" id="book-lastname" required
+                  placeholder="นามสกุล"
+                  class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div><label for="book-phone" class="block text-sm font-medium text-navy-700 mb-1.5">เบอร์โทรศัพท์ <span
+                    class="text-red-400">*</span></label> <input type="tel" id="book-phone" required
+                  placeholder="0XX-XXX-XXXX"
+                  class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+              </div>
+              <div><label for="book-date" class="block text-sm font-medium text-navy-700 mb-1.5">วันที่ต้องการเข้าชม
+                  <span class="text-red-400">*</span></label> <input type="date" id="book-date" required
+                  min="2026-05-01" max="2026-05-30"
+                  class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+              </div>
+            </div>
+            <div class="mb-4"><label for="book-people"
+                class="block text-sm font-medium text-navy-700 mb-1.5">จำนวนผู้เข้าชม <span
+                  class="text-red-400">*</span></label> <input type="number" id="book-people" required min="1" max="100"
+                placeholder="จำนวนคน"
+                class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+            </div>
+            <div class="mb-6"><label for="book-email" class="block text-sm font-medium text-navy-700 mb-1.5">อีเมล
+                (ไม่บังคับ)</label> <input type="email" id="book-email" placeholder="email@example.com"
+                class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800 bg-white transition-all">
+            </div><button type="submit"
+              class="btn-primary w-full py-4 bg-navy-700 text-white font-semibold rounded-xl text-base flex items-center justify-center gap-2">
+              <i data-lucide="check-circle" class="w-5 h-5"></i> ยืนยันการจอง </button>
+          </form>
+        </div>
+      </div>
+    </section><!-- ========== FOOTER ========== -->
+    <footer class="bg-navy-900 text-white py-12 sm:py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+          <div>
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center"><span
+                  class="text-white font-bold text-sm font-display">YTS</span>
+              </div><span class="font-semibold text-lg">ยูทำศิลป์</span>
+            </div>
+            <p class="text-white/50 text-sm leading-relaxed">
+              นิทรรศการศิลปะร่วมสมัยที่เปิดพื้นที่ให้ทุกคนได้สัมผัสกับความงามของการสร้างสรรค์</p>
+          </div>
+          <div>
+            <h5 class="font-semibold text-white/80 mb-4 text-sm">ลิงก์ด่วน</h5>
+            <ul class="space-y-2">
+              <li><a href="#about"
+                  class="text-white/50 hover:text-white text-sm transition-colors">เกี่ยวกับนิทรรศการ</a></li>
+              <li><a href="#artists"
+                  class="text-white/50 hover:text-white text-sm transition-colors">ศิลปินที่เข้าร่วม</a></li>
+              <li><a href="#gallery" class="text-white/50 hover:text-white text-sm transition-colors">ผลงาน</a></li>
+              <li><a href="#ticket" class="text-white/50 hover:text-white text-sm transition-colors">จองบัตร</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-semibold text-white/80 mb-4 text-sm">ติดต่อเรา</h5>
+            <ul class="space-y-2 text-white/50 text-sm">
+              <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> 02-XXX-XXXX</li>
+              <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> info@yuthamsin.art</li>
+              <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> เขตพระนคร กรุงเทพฯ</li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-semibold text-white/80 mb-4 text-sm">ติดตามเรา</h5>
+            <div class="flex gap-3"><span
+                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"><i
+                  data-lucide="facebook" class="w-5 h-5"></i></span> <span
+                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"><i
+                  data-lucide="instagram" class="w-5 h-5"></i></span> <span
+                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"><i
+                  data-lucide="twitter" class="w-5 h-5"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/10 pt-8 text-center">
+          <p class="text-white/30 text-sm">© 2026 YuThamSin (ยูทำศิลป์). All rights reserved.</p>
+        </div>
+      </div>
+    </footer><!-- ========== LOGIN MODAL ========== -->
+    <div id="login-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="modal-backdrop absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onclick="closeModal('login')"></div>
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8"><button
+          onclick="closeModal('login')"
+          class="absolute top-4 right-4 text-navy-400 hover:text-navy-700 transition-colors"> <i data-lucide="x"
+            class="w-5 h-5"></i> </button>
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-4"><i
+              data-lucide="log-in" class="w-7 h-7 text-navy-600"></i>
+          </div>
+          <h3 class="text-xl font-bold text-navy-800">เข้าสู่ระบบ</h3>
+          <p class="text-navy-400 text-sm mt-1">ยินดีต้อนรับกลับมา</p>
+        </div>
+        <form onsubmit="handleLogin(event)">
+          <div class="mb-4"><label for="login-email"
+              class="block text-sm font-medium text-navy-700 mb-1.5">อีเมล</label> <input type="email" id="login-email"
+              required placeholder="email@example.com"
+              class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800">
+          </div>
+          <div class="mb-4"><label for="login-password"
+              class="block text-sm font-medium text-navy-700 mb-1.5">รหัสผ่าน</label> <input type="password"
+              id="login-password" required placeholder="••••••••"
+              class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800" minlength="4">
+          </div>
+          <p id="login-error" class="text-red-500 text-xs mb-3 hidden"></p><button type="submit"
+            class="btn-primary w-full py-3 bg-navy-700 text-white font-semibold rounded-xl text-sm">เข้าสู่ระบบ</button>
+        </form>
+        <p class="text-center text-navy-400 text-xs mt-5">ยังไม่มีบัญชี? <button
+            onclick="closeModal('login');openModal('register')"
+            class="text-navy-600 font-semibold hover:underline">สมัครสมาชิก</button></p>
+      </div>
+    </div><!-- ========== REGISTER MODAL ========== -->
+    <div id="register-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="modal-backdrop absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onclick="closeModal('register')">
+      </div>
+      <div
+        class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 max-h-[90%] overflow-y-auto">
+        <button onclick="closeModal('register')"
+          class="absolute top-4 right-4 text-navy-400 hover:text-navy-700 transition-colors"> <i data-lucide="x"
+            class="w-5 h-5"></i> </button>
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 bg-navy-50 rounded-xl flex items-center justify-center mx-auto mb-4"><i
+              data-lucide="user-plus" class="w-7 h-7 text-navy-600"></i>
+          </div>
+          <h3 class="text-xl font-bold text-navy-800">สมัครสมาชิก</h3>
+          <p class="text-navy-400 text-sm mt-1">สร้างบัญชีเพื่อจองบัตรเข้าชม</p>
+        </div>
+        <form onsubmit="handleRegister(event)">
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div><label for="reg-firstname" class="block text-sm font-medium text-navy-700 mb-1.5">ชื่อ</label> <input
+                type="text" id="reg-firstname" required placeholder="ชื่อจริง"
+                class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800">
+            </div>
+            <div><label for="reg-lastname" class="block text-sm font-medium text-navy-700 mb-1.5">นามสกุล</label> <input
+                type="text" id="reg-lastname" required placeholder="นามสกุล"
+                class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800">
+            </div>
+          </div>
+          <div class="mb-4"><label for="reg-email" class="block text-sm font-medium text-navy-700 mb-1.5">อีเมล</label>
+            <input type="email" id="reg-email" required placeholder="email@example.com"
+              class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800">
+          </div>
+          <div class="mb-4"><label for="reg-password"
+              class="block text-sm font-medium text-navy-700 mb-1.5">รหัสผ่าน</label> <input type="password"
+              id="reg-password" required placeholder="อย่างน้อย 4 ตัวอักษร"
+              class="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm text-navy-800" minlength="4">
+          </div>
+          <p id="register-error" class="text-red-500 text-xs mb-3 hidden"></p><button type="submit"
+            class="btn-primary w-full py-3 bg-navy-700 text-white font-semibold rounded-xl text-sm">สมัครสมาชิก</button>
+        </form>
+        <p class="text-center text-navy-400 text-xs mt-5">มีบัญชีอยู่แล้ว? <button
+            onclick="closeModal('register');openModal('login')"
+            class="text-navy-600 font-semibold hover:underline">เข้าสู่ระบบ</button></p>
+      </div>
+    </div><!-- ========== BOOKING SUCCESS MODAL ========== -->
+    <div id="success-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div class="modal-backdrop absolute inset-0 bg-navy-900/60 backdrop-blur-sm" onclick="closeModal('success')">
+      </div>
+      <div class="modal-content relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 sm:p-8 text-center">
+        <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5"><i
+            data-lucide="check-circle-2" class="w-10 h-10 text-green-500"></i>
+        </div>
+        <h3 class="text-xl font-bold text-navy-800 mb-2">จองสำเร็จ!</h3>
+        <p class="text-navy-500 text-sm mb-4">ระบบได้บันทึกการจองของคุณเรียบร้อยแล้ว</p>
+        <div class="bg-navy-50 rounded-xl p-4 mb-5">
+          <p class="text-navy-400 text-xs mb-1">รหัสการจอง</p>
+          <p id="booking-code" class="text-2xl font-bold text-navy-700 tracking-wider font-display">YTS-XXXXXX</p>
+        </div>
+        <p class="text-navy-400 text-xs mb-5">กรุณาบันทึกรหัสการจองนี้ไว้ เพื่อใช้แสดงที่จุดลงทะเบียนในวันเข้าชม</p>
+        <button onclick="closeModal('success')"
+          class="btn-primary w-full py-3 bg-navy-700 text-white font-semibold rounded-xl text-sm">ปิด</button>
+      </div>
+    </div>
+  </div><!-- end #app -->
+  <script>
+    // ========== CONFIG & STATE ==========
+    const defaultConfig = {
+      exhibition_title: 'นิทรรศการศิลปะ ยูทำศิลป์',
+      exhibition_subtitle: 'YuThamSin Exhibition 2026',
+      event_date: '1 - 30 พฤษภาคม 2026',
+      event_time: '10:00 - 20:00 น.',
+      venue_name: 'หอศิลป์ร่วมสมัย YTS',
+      background_color: '#ffffff',
+      surface_color: '#fafbfd',
+      text_color: '#091b3a',
+      primary_action_color: '#0f2850',
+      secondary_action_color: '#2d5087',
+      font_family: 'Noto Sans Thai',
+      font_size: 16
+    };
+
+    let selectedTicketType = null;
+
+    // ========== ELEMENT SDK INIT ==========
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const c = { ...defaultConfig, ...config };
+          // Text content
+          const heroTitle = document.getElementById('hero-title');
+          if (heroTitle) heroTitle.innerHTML = c.exhibition_title.replace('ยูทำศิลป์', '<br><span class="text-navy-200">ยูทำศิลป์</span>');
+          const heroSub = document.getElementById('hero-subtitle');
+          if (heroSub) heroSub.textContent = c.exhibition_subtitle;
+          const visitDate = document.getElementById('visit-date');
+          if (visitDate) visitDate.textContent = c.event_date;
+          const visitTime = document.getElementById('visit-time');
+          if (visitTime) visitTime.textContent = c.event_time;
+          const visitVenue = document.getElementById('visit-venue');
+          if (visitVenue) visitVenue.textContent = c.venue_name;
+
+          // Colors
+          document.body.style.backgroundColor = c.background_color;
+          document.body.style.color = c.text_color;
+          document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (!btn.closest('.hero-bg')) btn.style.backgroundColor = c.primary_action_color;
+          });
+
+          // Font
+          const fontStack = `${c.font_family}, 'Noto Sans Thai', sans-serif`;
+          document.body.style.fontFamily = fontStack;
+          const baseSize = c.font_size || 16;
+          document.body.style.fontSize = baseSize + 'px';
+        },
+        mapToCapabilities: (config) => {
+          const c = { ...defaultConfig, ...config };
+          return {
+            recolorables: [
+              { get: () => c.background_color, set: (v) => { c.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+              { get: () => c.surface_color, set: (v) => { c.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+              { get: () => c.text_color, set: (v) => { c.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+              { get: () => c.primary_action_color, set: (v) => { c.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+              { get: () => c.secondary_action_color, set: (v) => { c.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => c.font_family,
+              set: (v) => { c.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+            },
+            fontSizeable: {
+              get: () => c.font_size,
+              set: (v) => { c.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+            }
+          };
+        },
+        mapToEditPanelValues: (config) => {
+          const c = { ...defaultConfig, ...config };
+          return new Map([
+            ['exhibition_title', c.exhibition_title],
+            ['exhibition_subtitle', c.exhibition_subtitle],
+            ['event_date', c.event_date],
+            ['event_time', c.event_time],
+            ['venue_name', c.venue_name]
+          ]);
+        }
+      });
+    }
+
+    // ========== AUTH SYSTEM (LocalStorage) ==========
+    function getUsers() {
+      try { return JSON.parse(localStorage.getItem('yts_users') || '[]'); } catch { return []; }
+    }
+    function saveUsers(users) { localStorage.setItem('yts_users', JSON.stringify(users)); }
+    function getCurrentUser() {
+      try { return JSON.parse(localStorage.getItem('yts_current_user')); } catch { return null; }
+    }
+    function setCurrentUser(user) { localStorage.setItem('yts_current_user', JSON.stringify(user)); }
+    function clearCurrentUser() { localStorage.removeItem('yts_current_user'); }
+
+    function updateAuthUI() {
+      const user = getCurrentUser();
+      const authBtns = document.getElementById('auth-buttons');
+      const userDisp = document.getElementById('user-display');
+      const mobileAuth = document.getElementById('mobile-auth-buttons');
+      const mobileUser = document.getElementById('mobile-user-display');
+      const userName = document.getElementById('user-name');
+      const mobileUserName = document.getElementById('mobile-user-name');
+
+      if (user) {
+        if (authBtns) authBtns.classList.add('hidden');
+        if (userDisp) {
+          userDisp.classList.remove('hidden');
+          userDisp.classList.add('flex');
+        }
+        if (userName) userName.textContent = user.firstname + ' ' + user.lastname;
+        if (mobileAuth) mobileAuth.classList.add('hidden');
+        if (mobileUser) mobileUser.classList.remove('hidden');
+        if (mobileUserName) mobileUserName.textContent = user.firstname + ' ' + user.lastname;
+      } else {
+        if (authBtns) authBtns.classList.remove('hidden');
+        if (userDisp) {
+          userDisp.classList.add('hidden');
+          userDisp.classList.remove('flex');
+        }
+        if (mobileAuth) mobileAuth.classList.remove('hidden');
+        if (mobileUser) mobileUser.classList.add('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errEl = document.getElementById('login-error');
+      const users = getUsers();
+      const user = users.find(u => u.email === email && u.password === password);
+      if (user) {
+        errEl.classList.add('hidden');
+        setCurrentUser(user);
+        updateAuthUI();
+        closeModal('login');
+        showToast('เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ' + user.firstname, 'success');
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
+      } else {
+        errEl.textContent = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const firstname = document.getElementById('reg-firstname').value.trim();
+      const lastname = document.getElementById('reg-lastname').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const errEl = document.getElementById('register-error');
+      const users = getUsers();
+      if (users.find(u => u.email === email)) {
+        errEl.textContent = 'อีเมลนี้ถูกใช้งานแล้ว';
+        errEl.classList.remove('hidden');
+        return;
+      }
+      const newUser = { firstname, lastname, email, password };
+      users.push(newUser);
+      saveUsers(users);
+      setCurrentUser(newUser);
+      updateAuthUI();
+      closeModal('register');
+      showToast('สมัครสมาชิกสำเร็จ! ยินดีต้อนรับ ' + firstname, 'success');
+      document.getElementById('reg-firstname').value = '';
+      document.getElementById('reg-lastname').value = '';
+      document.getElementById('reg-email').value = '';
+      document.getElementById('reg-password').value = '';
+      errEl.classList.add('hidden');
+    }
+
+    function logout() {
+      clearCurrentUser();
+      updateAuthUI();
+      showToast('ออกจากระบบเรียบร้อยแล้ว', 'info');
+    }
+
+    // ========== MODALS ==========
+    function openModal(name) {
+      document.getElementById(name + '-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(name) {
+      document.getElementById(name + '-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // ========== TICKET TYPE SELECTION ==========
+    function selectTicketType(el, type) {
+      selectedTicketType = type;
+      document.querySelectorAll('.ticket-type').forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('ticket-type-error').classList.add('hidden');
+    }
+
+    // ========== BOOKING ==========
+    function handleBooking(e) {
+      e.preventDefault();
+      if (!selectedTicketType) {
+        document.getElementById('ticket-type-error').classList.remove('hidden');
+        return;
+      }
+      // Generate booking code
+      const code = 'YTS-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      document.getElementById('booking-code').textContent = code;
+      openModal('success');
+      // Reset form
+      document.getElementById('booking-form').reset();
+      document.querySelectorAll('.ticket-type').forEach(t => t.classList.remove('selected'));
+      selectedTicketType = null;
+    }
+
+    // ========== TOAST NOTIFICATIONS ==========
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const bg = type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-navy-700';
+      toast.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2`;
+      const iconName = type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info';
+      toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4"></i> ${message}`;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => { if (toast.parentNode) toast.remove(); }, 4000);
+    }
+
+    // ========== MOBILE MENU ==========
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    }
+
+    // ========== NAVBAR SCROLL EFFECT ==========
+    const appContainer = document.getElementById('app');
+    appContainer.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      const brand = document.getElementById('nav-brand');
+      const navLinks = document.querySelectorAll('.nav-link');
+      if (appContainer.scrollTop > 80) {
+        navbar.style.background = 'rgba(255,255,255,0.97)';
+        navbar.style.boxShadow = '0 1px 20px rgba(15,40,80,0.08)';
+        brand.style.color = '#091b3a';
+        navLinks.forEach(l => { l.style.color = '#1a3a6b'; });
+      } else {
+        navbar.style.background = 'transparent';
+        navbar.style.boxShadow = 'none';
+        brand.style.color = '#fff';
+        navLinks.forEach(l => { l.style.color = 'rgba(255,255,255,0.9)'; });
+      }
+    });
+
+    // ========== SCROLL ANIMATIONS ==========
+    function initScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // ========== INIT ==========
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateAuthUI();
+      initScrollAnimations();
+      // Trigger hero animations
+      setTimeout(() => {
+        document.querySelectorAll('#home .fade-up').forEach(el => el.classList.add('visible'));
+      }, 300);
+    });
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9ddc1ba4f2718823',t:'MTc3Mzc1MTY2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
